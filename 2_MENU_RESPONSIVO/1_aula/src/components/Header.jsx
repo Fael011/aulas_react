@@ -1,17 +1,39 @@
-import { List, Hamburger } from "@phosphor-icons/react"
+import { List, Hamburger, X } from "@phosphor-icons/react"
+
+import { useState } from "react"
 import styles from "./Header.module.css"
 
 function Header() {
+  const [abrirMenu, setAbrirMenu] = useState(false);
+
+  function handleAbrirFecharMenu(){
+    if (abrirMenu == true) {
+      setAbrirMenu(false)
+      return
+    }
+
+    setAbrirMenu(true)
+
+  }
+
   return (
     <header>
-        <div className='mobile'>
+        <div className={styles.mobile}>
             <div className={styles.menu_logo}>
-                <button><List size={32}></List></button>
+                <button onClick={handleAbrirFecharMenu}>{
+                  abrirMenu == true ?(
+                    <X size={32}/>
+                  ) :(
+                    <List size={32}/>
+                  )
+                }
+                </button>
+                
 
                 <Hamburger size={32} />
             </div>
 
-            <div className={styles.opcoes}>
+            <div className={`${styles.options} ${abrirMenu ===true && styles.open}`}>
                   <nav>
                     <a href="">Home</a>
                     <a href="">Ferramentas</a>
@@ -19,6 +41,22 @@ function Header() {
                     <a href="">Bibliografia</a>
                   </nav>
                 </div>
+        </div>
+
+        <div className={styles.desktop}>
+          <div>
+            <Hamburger size={32}/>
+          </div>
+
+          <div>
+              <nav className={styles.desktop_options}>
+                <a href="">Home</a>
+                <a href="">Ferramentas</a>
+                <a href="">Objetivos</a>
+                <a href="">Bibliografia</a>
+              </nav>
+          </div>
+
         </div>
     </header>
   )
